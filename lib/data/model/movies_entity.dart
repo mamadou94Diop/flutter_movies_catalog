@@ -1,17 +1,20 @@
-import 'package:first_flutter_app/generated/json/base/json_convert_content.dart';
-import 'package:first_flutter_app/generated/json/movies_entity_helper.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
+
+import 'package:movie_catalog_flutter_app/generated/json/base/json_convert_content.dart';
+import 'package:movie_catalog_flutter_app/generated/json/movies_entity_helper.dart';
+import 'package:movie_catalog_flutter_app/utils/string_utils.dart';
 
 class MovieWrapper with JsonConvert<MovieWrapper> {
   List<MovieEntity> movies;
 
-  MovieWrapper(List<MovieEntity> _movies) {
-    movies = _movies;
+  MovieWrapper() {
+    movies = [];
   }
 
   List<String> getMoviesGenre() {
-    List<String> genres = movies.expand((e) => e.genres).toList().toSet().toList();
+    List<String> genres =
+        movies.expand((e) => e.genres).toList().toSet().toList();
     genres.sort();
     return genres;
   }
@@ -33,20 +36,40 @@ class MovieEntity with JsonConvert<MovieEntity> {
   List<String> actors;
   String imdbRating;
   String posterurl;
+
+  double rating() {
+    if (ratings.isNotEmpty) {
+      return ratings.reduce((a, b) => a + b) / (ratings.length);
+    } else if (imdbRating.isEmpty) {
+      return double.parse(imdbRating);
+    } else {
+      return 0.0;
+    }
+  }
+  String movieDuration(){
+     if (duration.isEmpty){
+        return "Unknown";
+     } else {
+      return formatDuration(duration);
+     }
+  }
 }
 
 Future<MovieWrapper> getMovies(String filename) async {
   String jsonData = await rootBundle.loadString(filename);
   final jsonResult = json.decode(jsonData);
   final movies = toMovieEntityList(jsonResult);
+  final movieWrapper = MovieWrapper();
+  movieWrapper.movies = movies;
 
-  return new MovieWrapper(movies);
+  return movieWrapper;
 }
 
 List<MovieEntity> toMovieEntityList(json) {
-  var movies = List<MovieEntity>();
+  List<MovieEntity> movies = [];
   for (var index = 0; index < json.length; index++) {
-    var movieEntity = moviesEntityFromJson(MovieEntity(), json[index]);
+    final MovieEntity movieEntity =
+        movieEntityFromJson(MovieEntity(), json[index]);
     movies.add(movieEntity);
   }
   return movies;

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:movie_catalog_flutter_app/widgets/movie_list_widget.dart';
 
 import 'home.dart';
+import 'movie_detail.dart';
 
 void main() {
   runApp(MyApp());
@@ -11,9 +13,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      routes: {"/movie": (context) => MovieDetailPage()},
       theme: ThemeData(
         // This is the theme of your application.
-        //
         // Try running your application with "flutter run". You'll see the
         // application has a blue toolbar. Then, without quitting the app, try
         // changing the primarySwatch below to Colors.green and then invoke

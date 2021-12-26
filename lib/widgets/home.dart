@@ -1,6 +1,6 @@
-import 'package:first_flutter_app/widgets/movies.dart';
-import 'package:first_flutter_app/widgets/watchlist.dart';
 import 'package:flutter/material.dart';
+import 'package:movie_catalog_flutter_app/widgets/watchlist.dart';
+import 'movies.dart';
 
 class MyHomePage extends StatefulWidget {
   final String title;
@@ -15,8 +15,8 @@ class _MyHomePageState extends State<MyHomePage> {
   int _currentIndex = 0;
   final List<Widget> _children = [
     MoviesPage(key: Key("1"), id: "TOP_MOVIES"),
-    MoviesPage(key: Key("2"),id: "MOVIES_SOON"),
-    MoviesPage(key: Key("3"),id: "IN_THEATER"),
+    MoviesPage(key: Key("2"), id: "MOVIES_SOON"),
+    MoviesPage(key: Key("3"), id: "IN_THEATER"),
     WatchlistPage(title: "Yeah I am very hyped on movies here.")
   ];
 
@@ -50,9 +50,10 @@ class _MyHomePageState extends State<MyHomePage> {
         elevation: 32,
         backgroundColor: Colors.yellow,
         onTap: (value) => onTabTapped(value),
-        selectedIconTheme: IconThemeData(color: Colors.black, size: 16),
+        selectedItemColor: Colors.black,
+        selectedIconTheme: IconThemeData(color: Colors.black, size: 14),
         selectedLabelStyle: TextStyle(
-            color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+            color: Colors.black, fontSize: 14, fontWeight: FontWeight.bold),
         unselectedIconTheme: IconThemeData(color: Colors.black, size: 12),
         unselectedLabelStyle: TextStyle(color: Colors.black, fontSize: 12),
         items: [

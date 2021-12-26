@@ -1,7 +1,19 @@
+import 'package:movie_catalog_flutter_app/data/model/movies_entity.dart';
 
-import 'package:first_flutter_app/data/model/movies_entity.dart';
+movieWrapperFromJson(MovieWrapper data, Map<String, dynamic> json) {
+	if (json['movies'] != null) {
+		data.movies = (json['movies'] as List).map((v) => MovieEntity().fromJson(v)).toList();
+	}
+	return data;
+}
 
-moviesEntityFromJson(MovieEntity data, Map<String, dynamic> json) {
+Map<String, dynamic> movieWrapperToJson(MovieWrapper entity) {
+	final Map<String, dynamic> data = new Map<String, dynamic>();
+	data['movies'] =  entity.movies?.map((v) => v.toJson())?.toList();
+	return data;
+}
+
+movieEntityFromJson(MovieEntity data, Map<String, dynamic> json) {
 	if (json['id'] != null) {
 		data.id = json['id'].toString();
 	}
@@ -54,7 +66,7 @@ moviesEntityFromJson(MovieEntity data, Map<String, dynamic> json) {
 	return data;
 }
 
-Map<String, dynamic> moviesEntityToJson(MovieEntity entity) {
+Map<String, dynamic> movieEntityToJson(MovieEntity entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
 	data['id'] = entity.id;
 	data['title'] = entity.title;
