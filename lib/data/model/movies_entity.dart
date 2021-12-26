@@ -39,7 +39,7 @@ class MovieEntity with JsonConvert<MovieEntity> {
 
   double rating() {
     if (ratings.isNotEmpty) {
-      return ratings.reduce((a, b) => a + b) / (ratings.length);
+      return 0.5* ratings.reduce((a, b) => a + b) / (ratings.length);
     } else if (imdbRating.isEmpty) {
       return double.parse(imdbRating);
     } else {
